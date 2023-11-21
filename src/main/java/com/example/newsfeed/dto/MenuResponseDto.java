@@ -12,4 +12,5 @@ public class MenuResponseDto {
         this.title = menu.getTitle();
         this.content = menu.getContent();
     }
+
 }

@@ -14,4 +14,5 @@ import lombok.Setter;
 public class CommonResponseDto {
     private String msg;
     private Integer statusCode;
+
 }

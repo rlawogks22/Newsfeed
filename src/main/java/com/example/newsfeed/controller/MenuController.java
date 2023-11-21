@@ -41,4 +41,5 @@ public class MenuController {
         menuService.deleteMenu(menuId);
         return new CommonResponseDto("게시글이 삭제되었습니다.", HttpStatus.OK.value());
     }
+
 }

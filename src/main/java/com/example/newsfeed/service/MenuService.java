@@ -49,6 +49,7 @@ public class MenuService {
         menuRepository.delete(menu);
     }
 
+
     public Menu getMenu(Long menuId) {
         return menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글 ID 입니다."));
