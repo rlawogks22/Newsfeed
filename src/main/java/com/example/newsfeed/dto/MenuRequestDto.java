@@ -6,4 +6,5 @@ import lombok.Getter;
 public class MenuRequestDto {
     String title;
     String content;
+
 }
