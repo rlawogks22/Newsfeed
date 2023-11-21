@@ -7,9 +7,13 @@ import com.example.newsfeed.entity.Menu;
 import com.example.newsfeed.repository.MenuRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +31,7 @@ public class MenuService {
     }
 
     public List<MenuResponseDto> getAll() {
-        List<Menu> menuList = menuRepository.findAll();
+        List<Menu> menuList = menuRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         List<MenuResponseDto> menuResponseDtoList = new ArrayList<>();
         for (Menu m : menuList) {
             menuResponseDto = new MenuResponseDto(m);
@@ -40,6 +44,7 @@ public class MenuService {
     public MenuResponseDto updateMenu(MenuRequestDto menuRequestDto, Long menuId) {
         menu = getMenu(menuId);
         menu.updateMenu(menuRequestDto);
+        menu.setModifiedAt(LocalDateTime.now());
         return new MenuResponseDto(menu);
     }
 
