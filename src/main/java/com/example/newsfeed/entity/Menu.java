@@ -1,5 +1,6 @@
 package com.example.newsfeed.entity;
 
+import com.example.newsfeed.dto.MenuRequestDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,8 +26,19 @@ public class Menu {
     private LocalDateTime createdAt;
     @Column
     private LocalDateTime modifiedAt;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    @JsonIgnore
+//    private User user;
+
+    public Menu(MenuRequestDto menuRequestDto) {
+        this.title = menuRequestDto.getTitle();
+        this.content = menuRequestDto.getContent();
+        this.createdAt = LocalDateTime.now();
+    }
+    public void updateMenu(MenuRequestDto menuRequestDto){
+        this.title = menuRequestDto.getTitle();
+        this.content = menuRequestDto.getContent();
+        this.modifiedAt = LocalDateTime.now();
+    }
 }
