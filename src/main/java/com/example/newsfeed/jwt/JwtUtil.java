@@ -1,2 +1,4 @@
-package com.example.newsfeed.jwt;public class JwtUtil {
+package com.example.newsfeed.jwt;
+
+public class JwtUtil {
 }

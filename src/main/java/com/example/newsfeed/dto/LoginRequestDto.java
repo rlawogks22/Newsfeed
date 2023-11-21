@@ -1,2 +1,7 @@
-package com.example.newsfeed.dto;public class LoginRequestDto {
+package com.example.newsfeed.dto;
+
+import lombok.Getter;
+
+@Getter
+public class LoginRequestDto {
 }

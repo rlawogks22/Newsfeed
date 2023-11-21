@@ -1,2 +1,4 @@
-package com.example.newsfeed.jwt;public class AuthorizationFilter {
+package com.example.newsfeed.jwt;
+
+public class AuthorizationFilter {
 }
