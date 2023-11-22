@@ -26,10 +26,10 @@ public class Menu {
     private LocalDateTime createdAt;
     @Column
     private LocalDateTime modifiedAt;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    @JsonIgnore
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     public Menu(MenuRequestDto menuRequestDto) {
         this.title = menuRequestDto.getTitle();

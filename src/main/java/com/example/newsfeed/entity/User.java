@@ -29,8 +29,8 @@ public class User {
     @Column
     private String profile;
 
-//    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Menu> menu;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Menu> menu;
 
     public User(String username, String pwd, String nickname, String email, String profile) {
         this.username = username;
