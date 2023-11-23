@@ -1,4 +1,4 @@
-package com.example.newsfeed.dto;
+package com.example.newsfeed.dto.commentdto;
 
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
