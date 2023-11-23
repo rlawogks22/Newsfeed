@@ -31,6 +31,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Menu> menu;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Comment> commentList;
 
     public User(String username, String pwd, String nickname, String email, String profile) {
         this.username = username;

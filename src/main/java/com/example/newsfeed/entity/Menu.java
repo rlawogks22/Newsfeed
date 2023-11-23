@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +32,9 @@ public class Menu {
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "menu", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Comment> commentList;
+
     public Menu(MenuRequestDto menuRequestDto) {
         this.title = menuRequestDto.getTitle();
         this.content = menuRequestDto.getContent();
@@ -40,5 +44,9 @@ public class Menu {
         this.title = menuRequestDto.getTitle();
         this.content = menuRequestDto.getContent();
         this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void addComment(Comment comment){
+        this.commentList.add(comment);
     }
 }
