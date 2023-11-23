@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
-public class UserResponseDto {
+public class UserResponseDto extends CommonResponseDto{
 
     private String email;
     private String nickname;

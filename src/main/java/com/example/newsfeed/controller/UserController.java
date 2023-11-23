@@ -1,8 +1,7 @@
 package com.example.newsfeed.controller;
 
-
 import com.example.newsfeed.dto.*;
-import com.example.newsfeed.dto.userdto.*;
+import com.example.newsfeed.dto.SignupRequestDto;
 import com.example.newsfeed.jwt.JwtUtil;
 import com.example.newsfeed.service.UserService;
 import com.example.newsfeed.userdetails.UserDetailsImpl;
@@ -16,11 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,7 +40,7 @@ public class UserController {
                         new CommonResponseDto(fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST.value()));
             }
         }
-        userService.signup((signupRequestDto));
+        userService.signup(signupRequestDto);
         return ResponseEntity.status(HttpStatus.OK.value()).body((
                 new CommonResponseDto("성공적으로 회원가입에 성공했습니다.", HttpStatus.OK.value())));
     }
@@ -84,9 +79,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-        public ResponseEntity<UserResponseDto> update(@RequestBody UserUpdateRequestdTO userRequestDto,
-                                                      @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<UserResponseDto> update(@RequestBody UserUpdateRequestdTO userRequestDto,
+                                                  @AuthenticationPrincipal UserDetailsImpl userDetails){
 
-            return ResponseEntity.status(HttpStatus.OK.value()).body(userService.updateUserService(userRequestDto, userDetails));
+        return ResponseEntity.status(HttpStatus.OK.value()).body(userService.updateUserService(userRequestDto, userDetails));
     }
 }

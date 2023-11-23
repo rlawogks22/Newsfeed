@@ -10,7 +10,7 @@ import java.net.UnknownServiceException;
 import java.time.LocalDateTime;
 
 @Getter
-public class CommentResponseDto {
+public class CommentResponseDto extends CommonResponseDto{
     Menu menu;
     String text;
     User user;

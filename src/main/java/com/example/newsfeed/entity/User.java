@@ -1,7 +1,7 @@
 package com.example.newsfeed.entity;
 
-import com.example.newsfeed.dto.userdto.SignupRequestDto;
-import com.example.newsfeed.dto.userdto.UserUpdateRequestdTO;
+import com.example.newsfeed.dto.SignupRequestDto;
+import com.example.newsfeed.dto.UserUpdateRequestdTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

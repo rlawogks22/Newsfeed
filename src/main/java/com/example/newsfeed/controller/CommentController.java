@@ -2,6 +2,7 @@ package com.example.newsfeed.controller;
 
 import com.example.newsfeed.dto.CommentRequestDto;
 import com.example.newsfeed.dto.MenuResponseDto;
+import com.example.newsfeed.dto.CommentRequestDto;
 import com.example.newsfeed.service.CommentService;
 import com.example.newsfeed.userdetails.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
