@@ -1,4 +1,4 @@
-package com.example.newsfeed.dto;
+package com.example.newsfeed.dto.commentdto;
 
 import com.example.newsfeed.entity.Comment;
 import com.example.newsfeed.entity.Menu;

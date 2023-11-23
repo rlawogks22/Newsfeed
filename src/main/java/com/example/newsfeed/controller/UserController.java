@@ -1,12 +1,8 @@
 package com.example.newsfeed.controller;
 
 
-import com.example.newsfeed.dto.CommonResponseDto;
-import com.example.newsfeed.dto.LoginRequestDto;
-import com.example.newsfeed.dto.PwdCheckRequestDto;
-import com.example.newsfeed.dto.SignupRequestDto;
-import com.example.newsfeed.dto.UserRequestDto;
-import com.example.newsfeed.dto.UserResponseDto;
+import com.example.newsfeed.dto.*;
+import com.example.newsfeed.dto.userdto.*;
 import com.example.newsfeed.jwt.JwtUtil;
 import com.example.newsfeed.service.UserService;
 import com.example.newsfeed.userdetails.UserDetailsImpl;
@@ -78,7 +74,7 @@ public class UserController {
     }
 
     @PostMapping("/check")
-    public ResponseEntity<CommonResponseDto> check(@RequestBody PwdCheckRequestDto pwdCheckRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<CommonResponseDto> check(@RequestBody PwdCheckRequestDto pwdCheckRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         try {
             userService.pwdCheck(pwdCheckRequestDto,userDetails);
         } catch (IllegalArgumentException e) {
@@ -88,12 +84,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-        public ResponseEntity<UserResponseDto> update(@RequestBody UserRequestDto userRequestDto,
-                                                        @AuthenticationPrincipal UserDetailsImpl userDetails){
+        public ResponseEntity<UserResponseDto> update(@RequestBody UserUpdateRequestdTO userRequestDto,
+                                                      @AuthenticationPrincipal UserDetailsImpl userDetails){
 
-            return ResponseEntity.status(HttpStatus.OK.value()).body(userService.updateUser(userRequestDto, userDetails));
+            return ResponseEntity.status(HttpStatus.OK.value()).body(userService.updateUserService(userRequestDto, userDetails));
     }
-
-
-
 }

@@ -1,9 +1,7 @@
 package com.example.newsfeed.entity;
 
-import com.example.newsfeed.dto.MenuRequestDto;
-import com.example.newsfeed.dto.SignupRequestDto;
-import com.example.newsfeed.dto.UserRequestDto;
-import com.example.newsfeed.repository.UserRepository;
+import com.example.newsfeed.dto.userdto.SignupRequestDto;
+import com.example.newsfeed.dto.userdto.UserUpdateRequestdTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,9 +50,9 @@ public class User {
         this.profile = signupRequestDto.getProfile();
     }
 
-    public void updateUser(UserRequestDto userRequestDto){
-        this.email = userRequestDto.getEmail();
-        this.nickname = userRequestDto.getNickname();
-        this.profile=userRequestDto.getProfile();
+    public void updateUser(UserUpdateRequestdTO userUpdateRequestdTO){
+        this.email = userUpdateRequestdTO.getEmail();
+        this.nickname = userUpdateRequestdTO.getNickname();
+        this.profile=userUpdateRequestdTO.getProfile();
     }
 }
