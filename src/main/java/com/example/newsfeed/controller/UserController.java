@@ -1,28 +1,22 @@
 package com.example.newsfeed.controller;
 
-
-import com.example.newsfeed.dto.CommonResponseDto;
-import com.example.newsfeed.dto.LoginRequestDto;
+import com.example.newsfeed.dto.*;
 import com.example.newsfeed.dto.SignupRequestDto;
 import com.example.newsfeed.jwt.JwtUtil;
 import com.example.newsfeed.service.UserService;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.newsfeed.userdetails.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @Slf4j
@@ -46,7 +40,7 @@ public class UserController {
                         new CommonResponseDto(fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST.value()));
             }
         }
-        userService.signup((signupRequestDto));
+        userService.signup(signupRequestDto);
         return ResponseEntity.status(HttpStatus.OK.value()).body((
                 new CommonResponseDto("성공적으로 회원가입에 성공했습니다.", HttpStatus.OK.value())));
     }
@@ -67,5 +61,27 @@ public class UserController {
     public ResponseEntity logout(HttpSession session){
         session.invalidate();
         return ResponseEntity.ok().body(new CommonResponseDto("로그아웃 성공", HttpStatus.OK.value()));
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<UserResponseDto> member(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return ResponseEntity.status(HttpStatus.CREATED.value()).body(userService.memberView(userDetails));
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<CommonResponseDto> check(@RequestBody PwdCheckRequestDto pwdCheckRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        try {
+            userService.pwdCheck(pwdCheckRequestDto,userDetails);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+        return ResponseEntity.ok().body(new CommonResponseDto("회원정보 수정페이지로 가기", HttpStatus.OK.value()));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<UserResponseDto> update(@RequestBody UserUpdateRequestdTO userRequestDto,
+                                                  @AuthenticationPrincipal UserDetailsImpl userDetails){
+
+        return ResponseEntity.status(HttpStatus.OK.value()).body(userService.updateUserService(userRequestDto, userDetails));
     }
 }
