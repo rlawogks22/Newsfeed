@@ -39,8 +39,12 @@ public class UserController {
                 return ResponseEntity.badRequest().body(
                         new CommonResponseDto(fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST.value()));
             }
+        }try {
+            userService.signup(signupRequestDto);
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(
+                    new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
-        userService.signup(signupRequestDto);
         return ResponseEntity.status(HttpStatus.OK.value()).body((
                 new CommonResponseDto("성공적으로 회원가입에 성공했습니다.", HttpStatus.OK.value())));
     }
