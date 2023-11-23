@@ -1,19 +1,11 @@
 package com.example.newsfeed.service;
 
-import com.example.newsfeed.dto.LoginRequestDto;
-import com.example.newsfeed.dto.MenuResponseDto;
-import com.example.newsfeed.dto.PwdCheckRequestDto;
-import com.example.newsfeed.dto.SignupRequestDto;
-import com.example.newsfeed.dto.UserRequestDto;
-import com.example.newsfeed.dto.UserResponseDto;
-import com.example.newsfeed.entity.Menu;
+import com.example.newsfeed.dto.userdto.*;
 import com.example.newsfeed.entity.User;
 import com.example.newsfeed.repository.UserRepository;
 import com.example.newsfeed.userdetails.UserDetailsImpl;
-import com.fasterxml.jackson.core.SerializableString;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +55,7 @@ public class UserService {
         user = userDetails.getUser();
         return new UserResponseDto(user);
     }
-    public void pwdCheck(PwdCheckRequestDto pwdCheckRequestDto,UserDetailsImpl userDetails){
+    public void pwdCheck(PwdCheckRequestDto pwdCheckRequestDto, UserDetailsImpl userDetails){
         pwd = pwdCheckRequestDto.getPwd();
         pwdcheck = userDetails.getUser().getPwd();
         if(!passwordEncoder.matches(pwd, pwdcheck)){
@@ -73,9 +65,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponseDto updateUser(UserRequestDto userRequestDto, UserDetailsImpl userDetails) {
+    public UserResponseDto updateUserService(UserUpdateRequestdTO userUpdateRequestdTO, UserDetailsImpl userDetails) {
         user = userDetails.getUser();
-        user.updateUser(userRequestDto);
+        user.updateUser(userUpdateRequestdTO);
+        userRepository.save(user);
         return new UserResponseDto(user);
     }
 }
