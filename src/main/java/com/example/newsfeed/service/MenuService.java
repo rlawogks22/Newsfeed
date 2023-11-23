@@ -65,7 +65,6 @@ public class MenuService {
         menu = getMenu(menuId);
         if(user.getUsername().equals(menu.getUser().getUsername())) {
             menu.updateMenu(menuRequestDto);
-            menu.setModifiedAt(LocalDateTime.now());
         }else{
             throw new RejectedExecutionException("작성자만 수정할 수 있습니다.");
         }

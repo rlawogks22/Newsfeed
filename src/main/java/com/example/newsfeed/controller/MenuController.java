@@ -29,6 +29,7 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(menuService.post(menuRequestDto, userDetails));
     }
 
+    // 메인페이지에서 보여줄 게시글 전체 조회
     @GetMapping("/get")
     public ResponseEntity<List<MenuResponseDto>> getAll(){
         List<MenuResponseDto> menuResponseDtoList = getMainPage();
