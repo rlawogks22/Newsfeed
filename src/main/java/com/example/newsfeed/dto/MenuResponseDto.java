@@ -13,6 +13,7 @@ import java.util.List;
 public class MenuResponseDto extends CommonResponseDto{
     private String title;
     private String content;
+    private String authorNickname;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private List<Comment> commentList;
@@ -20,6 +21,7 @@ public class MenuResponseDto extends CommonResponseDto{
     public MenuResponseDto(Menu menu) {
         this.title = menu.getTitle();
         this.content = menu.getContent();
+        this.authorNickname = menu.getUser().getNickname();
         this.createdAt = menu.getCreatedAt();
         this.modifiedAt = menu.getModifiedAt();
         this.commentList = menu.getCommentList();
