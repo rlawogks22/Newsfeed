@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.RejectedExecutionException;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/comments")
@@ -40,6 +42,8 @@ public class CommentController {
             menuResponseDto = commentService.updateComment(commentRequestDto, userDetails, commentId);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        } catch (RejectedExecutionException e){
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
         return ResponseEntity.status(HttpStatus.OK.value()).
                 body(menuResponseDto);
@@ -52,6 +56,8 @@ public class CommentController {
         try{
             menuResponseDto = commentService.deleteComment(commentRequestDto, userDetails, commentId);
         } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        } catch (RejectedExecutionException e){
             return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
         return ResponseEntity.status(HttpStatus.OK.value()).

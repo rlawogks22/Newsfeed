@@ -22,12 +22,15 @@ public class MenuController {
     private final MenuService menuService;
 
     @PostMapping
-    public ResponseEntity<MenuResponseDto> post(@RequestBody MenuRequestDto menuRequestDto,
+    public ResponseEntity<CommonResponseDto> post(@RequestBody MenuRequestDto menuRequestDto,
                                                 @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return ResponseEntity.status(HttpStatus.CREATED.value()).body(menuService.post(menuRequestDto, userDetails));
+
+        MenuResponseDto menuResponseDto = menuService.post(menuRequestDto, userDetails);
+        return ResponseEntity.status(HttpStatus.CREATED.value()).body(menuResponseDto);
     }
 
     // 메인페이지에서 보여줄 게시글 전체 조회
+    // /get을 달아준 이유는 WebSecurityConfig에서 /get/**로 /get url을 갖는 모든 요청은 허가해놨기 때문
     @GetMapping("/get")
     public ResponseEntity<CommonResponseDto> getAll(){
         MenuResponseListDto menuResponseDtoListDto = new MenuResponseListDto();
@@ -40,7 +43,7 @@ public class MenuController {
     }
 
     // 게시글 한개 조회
-    @GetMapping("/get/menus/{menuId}")
+    @GetMapping("/get/menu/{menuId}")
     public ResponseEntity<CommonResponseDto> getMenuByMenuId(@PathVariable Long menuId) {
         MenuResponseDto menuResponseDto;
         try {
@@ -52,7 +55,7 @@ public class MenuController {
     }
 
     // 검색 유저의 게시글 조회
-    @GetMapping("/get/users/{userId}")
+    @GetMapping("/get/user/{userId}")
     public ResponseEntity<CommonResponseDto> getMenuByUserId(@PathVariable Long userId){
         MenuResponseListDto menuResponseDtoListDto = new MenuResponseListDto();
         try {
@@ -84,6 +87,8 @@ public class MenuController {
         try{
             menuService.deleteMenu(menuId, userDetails);
             menuResponseListDto.setMenuResponseDtoList(getMainPage());
+        } catch (RejectedExecutionException e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
