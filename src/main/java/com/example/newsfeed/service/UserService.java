@@ -9,6 +9,7 @@ import com.example.newsfeed.entity.User;
 import com.example.newsfeed.repository.UserRepository;
 import com.example.newsfeed.userdetails.UserDetailsImpl;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,11 +56,15 @@ public class UserService {
         }
     }
 
-    public UserResponseDto memberView(UserDetailsImpl userDetails){
-        user = userDetails.getUser();
+    public UserResponseDto viewMypage(UserDetailsImpl userDetails){
+        if(userDetails!=null) {
+            user = userDetails.getUser();
+        } else {
+            throw new NullPointerException("로그인 된 회원이 아닙니다.");
+        }
         return new UserResponseDto(user);
     }
-    public void pwdCheck(PwdCheckRequestDto pwdCheckRequestDto, UserDetailsImpl userDetails){
+    public void checkPwd(PwdCheckRequestDto pwdCheckRequestDto, UserDetailsImpl userDetails){
         pwd = pwdCheckRequestDto.getPwd();
         pwdcheck = userDetails.getUser().getPwd();
         if(!passwordEncoder.matches(pwd, pwdcheck)){
