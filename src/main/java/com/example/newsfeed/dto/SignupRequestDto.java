@@ -29,4 +29,5 @@ public class SignupRequestDto {
 
     @Size(min= 1, max= 15, message = "한줄 소개의 길이는 1~15글자 사이입니다.")
     private String profile;
+
 }
